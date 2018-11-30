@@ -13,4 +13,8 @@ public class ElectroApplication extends SpringBootServletInitializer {
             SpringApplicationBuilder builder) {
         return builder.sources(ElectroApplication.class);
     }
+
+    public static void main(String[] args) {
+        SpringApplication.run(ElectroApplication.class, args);
+    }
 }
