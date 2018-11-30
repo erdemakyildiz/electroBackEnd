@@ -22,7 +22,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public String gTest() {
-        return "Meyaba";
+        return "test";
     }
 
 
