@@ -6,7 +6,7 @@
 	<groupId>com.electro</groupId>
 	<artifactId>electro</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>electro</name>
 	<description>Electro Social Media</description>
@@ -70,6 +70,9 @@
 	</dependencies>
 
 	<build>
+
+        <finalName>electro</finalName>
+
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
