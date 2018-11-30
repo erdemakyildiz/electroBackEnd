@@ -18,6 +18,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/test")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public String gTest() {
+        return "Meyaba";
+    }
+
+
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public void createUser(@RequestBody UserRequestDTO userRequestDTO) {
