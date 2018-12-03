@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -127,5 +128,15 @@ public class StreakService {
         List<Streak> all = streakRepository.findAllByCategoryEqualsAndActiveEquals(category, true);
 
         return convertDTO(all);
+    }
+
+    public List<String> getCategories(){
+        final List<Category> categories = categoryService.findCategories();
+
+        List<String> categoriesString = new ArrayList<>();
+        categories.forEach(category -> categoriesString.add(category.getName()));
+
+
+        return categoriesString;
     }
 }

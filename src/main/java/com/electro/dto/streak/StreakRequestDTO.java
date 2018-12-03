@@ -8,7 +8,7 @@ public class StreakRequestDTO {
 
     private long id;
     private String title;
-    private String content;
+    private byte[] content;
     private String categoryName;
 
 }

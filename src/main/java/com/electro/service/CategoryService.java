@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,6 +43,12 @@ public class CategoryService {
             throw new CategoryNotFoundException(String.format("kategori bulunamadı isim:%s", name));
 
         return category;
+    }
+
+    public List<Category> findCategories(){
+        List<Category> all = categoryRepository.findAll();
+
+        return all;
     }
 
     public void activeCategory(Category category) throws CategoryNotFoundException {

@@ -5,6 +5,7 @@ import com.electro.dto.streak.StreakResponseDTO;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Data
@@ -14,7 +15,7 @@ public class Streak {
     public Streak() {
     }
 
-    public Streak(long id, String title, String content) {
+    public Streak(long id, String title, byte[] content) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -30,7 +31,9 @@ public class Streak {
     private Integer dissLikeCount = 0;
     private Date createDate;
     private Date modifiedDate;
-    private String content;
+
+    @Lob
+    private byte[] content;
 
     private boolean active = true;
 
@@ -46,7 +49,9 @@ public class Streak {
     }
 
     public StreakResponseDTO toDTO() {
-        final StreakResponseDTO streakResponseDTO = new StreakResponseDTO(getId(), getTitle(), getLikeCount(), getDissLikeCount(), getCreateDate(), getModifiedDate(), getContent());
+        String str = new String(getContent(), StandardCharsets.UTF_8);
+
+        final StreakResponseDTO streakResponseDTO = new StreakResponseDTO(getId(), getTitle(), getLikeCount(), getDissLikeCount(), getCreateDate(), getModifiedDate(), str);
         return streakResponseDTO;
     }
 }

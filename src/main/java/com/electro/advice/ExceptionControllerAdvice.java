@@ -1,9 +1,6 @@
 package com.electro.advice;
 
-import com.electro.exception.CategoryNotFoundException;
-import com.electro.exception.StreakAuthorizeException;
-import com.electro.exception.StreakNullException;
-import com.electro.exception.UserNotFoundException;
+import com.electro.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -27,6 +24,12 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler({UserNotFoundException.class, StreakNullException.class, StreakAuthorizeException.class, CategoryNotFoundException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Object handleUserNotFound(UserNotFoundException e) {
+        return e.getMessage();
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public Object handleExceptionAuth(Exception e) {
         return e.getMessage();
     }
 

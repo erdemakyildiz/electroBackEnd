@@ -5,10 +5,12 @@ import com.electro.dto.user.UserResponseDTO;
 import com.electro.exception.UserNotFoundException;
 import com.electro.models.User;
 import com.electro.repository.UserRepository;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,16 +18,21 @@ import java.util.Optional;
 @Service
 public class UserService {
 
+    private final String algorithm = "SHA-256";
+    private int iterations = 1;
+
     @Autowired
     private UserRepository userRepository;
 
     public void createUser(UserRequestDTO userRequestDTO){
         final User user = new User().fromDTO(userRequestDTO);
+        user.setPassword(encode(user.getPassword()));
+
         userRepository.save(user);
     }
 
     public boolean login(String id, String pw){
-        final User user = userRepository.findFirstByNickNameEqualsOrMailEquals(id, id);
+        final User user = userRepository.findFirstByMailEqualsAndPasswordEquals(id, pw);
 
         return (user != null);
     }
@@ -44,7 +51,7 @@ public class UserService {
                 user.setNickName(userRequestDTO.getNickName());
 
             if (!StringUtils.isEmpty(userRequestDTO.getPassword()))
-                user.setPassword(userRequestDTO.getPassword());
+                user.setPassword(encode(userRequestDTO.getPassword()));
 
             if (!StringUtils.isEmpty(userRequestDTO.getMail()))
                 user.setMail(userRequestDTO.getMail());
@@ -79,4 +86,9 @@ public class UserService {
 
         return user;
     }
+
+    private String encode(String pass){
+        return DigestUtils.sha256Hex(pass);
+    }
+
 }

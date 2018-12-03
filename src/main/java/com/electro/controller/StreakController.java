@@ -43,6 +43,11 @@ public class StreakController {
         return streakService.getStreaksByCategory(categoryName);
     }
 
+    @GetMapping("/categories")
+    public List<String> getCategories() {
+        return streakService.getCategories();
+    }
+
     @PostMapping("/active")
     @ResponseStatus(HttpStatus.OK)
     public void activeStreak(@RequestParam("streakId") long streakId, User user) throws StreakAuthorizeException, StreakNullException {

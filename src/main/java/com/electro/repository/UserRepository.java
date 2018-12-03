@@ -13,4 +13,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findFirstByNickNameEqualsOrMailEquals(String nick, String mail);
 
+    User findFirstByMailEqualsAndPasswordEquals(String id, String pw);
+
 }
