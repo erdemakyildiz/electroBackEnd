@@ -4,13 +4,15 @@ import com.electro.security.JwtFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class ElectroApplication {
+public class ElectroApplication extends SpringBootServletInitializer {
 
-    @Value( "${secret.key}" )
+    @Value("${secret.key}")
     private String secretKey;
 
     @Bean
@@ -22,7 +24,14 @@ public class ElectroApplication {
         return registrationBean;
     }
 
-	public static void main(String[] args) {
-		SpringApplication.run(ElectroApplication.class, args);
-	}
+    @Override
+    protected SpringApplicationBuilder configure(
+            SpringApplicationBuilder builder) {
+        return builder.sources(ElectroApplication.class);
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(ElectroApplication.class, args);
+    }
+
 }
