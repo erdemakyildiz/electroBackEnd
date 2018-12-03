@@ -1,12 +1,12 @@
 package com.electro.repository;
 
-import com.electro.models.Category;
+import com.electro.models.Headline;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CategoryRepository  extends JpaRepository<Category, Long>{
+public interface HeadlineRepository extends JpaRepository<Headline, Long>{
 
-    Category findFirstByNameEquals(String name);
+    Headline findFirstByNameEquals(String name);
 
 }

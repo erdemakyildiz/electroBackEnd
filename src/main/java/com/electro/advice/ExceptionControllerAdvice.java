@@ -21,7 +21,7 @@ public class ExceptionControllerAdvice {
     }
 
 
-    @ExceptionHandler({UserNotFoundException.class, StreakNullException.class, StreakAuthorizeException.class, CategoryNotFoundException.class})
+    @ExceptionHandler({UserNotFoundException.class, StreakNullException.class, StreakAuthorizeException.class, HeadlineNotFoundException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Object handleUserNotFound(UserNotFoundException e) {
         return e.getMessage();

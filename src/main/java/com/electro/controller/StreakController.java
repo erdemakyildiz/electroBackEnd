@@ -2,10 +2,9 @@ package com.electro.controller;
 
 import com.electro.dto.streak.StreakRequestDTO;
 import com.electro.dto.streak.StreakResponseDTO;
-import com.electro.exception.CategoryNotFoundException;
+import com.electro.exception.HeadlineNotFoundException;
 import com.electro.exception.StreakAuthorizeException;
 import com.electro.exception.StreakNullException;
-import com.electro.models.Streak;
 import com.electro.models.User;
 import com.electro.service.StreakService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,14 +37,14 @@ public class StreakController {
         return streakService.getStreaksDesc();
     }
 
-    @GetMapping("/streaks/{categoryName}")
-    public List<StreakResponseDTO> streaksByCategory(@RequestParam("categoryName") String categoryName) throws CategoryNotFoundException {
-        return streakService.getStreaksByCategory(categoryName);
+    @GetMapping("/streaks/{headlineName}")
+    public List<StreakResponseDTO> streaksByHeadline(@RequestParam("headlineName") String headlineName) throws HeadlineNotFoundException {
+        return streakService.getStreaksByHeadline(headlineName);
     }
 
-    @GetMapping("/categories")
-    public List<String> getCategories() {
-        return streakService.getCategories();
+    @GetMapping("/headlines")
+    public List<String> getHeadlines() {
+        return streakService.getHadlines();
     }
 
     @PostMapping("/active")

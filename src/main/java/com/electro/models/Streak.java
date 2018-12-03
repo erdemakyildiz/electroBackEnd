@@ -41,7 +41,7 @@ public class Streak {
     private User createdUser;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    private Category category;
+    private Headline headline;
 
     public Streak fromDTO(StreakRequestDTO dto) {
         final Streak streak = new Streak(dto.getId() ,dto.getTitle(), dto.getContent());

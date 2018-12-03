@@ -2,10 +2,10 @@ package com.electro.service;
 
 import com.electro.dto.streak.StreakRequestDTO;
 import com.electro.dto.streak.StreakResponseDTO;
-import com.electro.exception.CategoryNotFoundException;
+import com.electro.exception.HeadlineNotFoundException;
 import com.electro.exception.StreakAuthorizeException;
 import com.electro.exception.StreakNullException;
-import com.electro.models.Category;
+import com.electro.models.Headline;
 import com.electro.models.Streak;
 import com.electro.models.User;
 import com.electro.repository.StreakRepository;
@@ -14,7 +14,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +26,7 @@ public class StreakService {
     private StreakRepository streakRepository;
 
     @Autowired
-    private CategoryService categoryService;
+    private HeadlineService headlineService;
 
     public void createStreak(StreakRequestDTO streakRequestDTO, User user) {
         final Streak streak = new Streak().fromDTO(streakRequestDTO);
@@ -35,8 +34,8 @@ public class StreakService {
         streak.setModifiedDate(null);
         streak.setCreatedUser(user);
 
-        final Category category = categoryService.findOrCreateCategory(streakRequestDTO.getCategoryName());
-        streak.setCategory(category);
+        final Headline headline = headlineService.findOrCreateHeadline(streakRequestDTO.getHeadlineName());
+        streak.setHeadline(headline);
 
         streakRepository.save(streak);
     }
@@ -113,7 +112,7 @@ public class StreakService {
                 return;
 
             StreakResponseDTO responseDTO = streak.toDTO();
-            responseDTO.setCategoryName(streak.getCategory().getName());
+            responseDTO.setHeadlineName(streak.getHeadline().getName());
             responseDTO.setNickName(streak.getCreatedUser().getNickName());
 
             dtos.add(responseDTO);
@@ -123,20 +122,20 @@ public class StreakService {
         return dtos;
     }
 
-    public List<StreakResponseDTO> getStreaksByCategory(String categoryName) throws CategoryNotFoundException {
-        final Category category = categoryService.findCategory(categoryName);
-        List<Streak> all = streakRepository.findAllByCategoryEqualsAndActiveEquals(category, true);
+    public List<StreakResponseDTO> getStreaksByHeadline(String headlineName) throws HeadlineNotFoundException {
+        final Headline headline = headlineService.findHeadline(headlineName);
+        List<Streak> all = streakRepository.findAllByHeadlineEqualsAndActiveEquals(headline, true);
 
         return convertDTO(all);
     }
 
-    public List<String> getCategories(){
-        final List<Category> categories = categoryService.findCategories();
+    public List<String> getHadlines(){
+        final List<Headline> headlines = headlineService.findHeadlines();
 
-        List<String> categoriesString = new ArrayList<>();
-        categories.forEach(category -> categoriesString.add(category.getName()));
+        List<String> array = new ArrayList<>();
+        headlines.forEach(headline -> array.add(headline.getName()));
 
 
-        return categoriesString;
+        return array;
     }
 }

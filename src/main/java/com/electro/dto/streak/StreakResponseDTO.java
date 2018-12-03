@@ -26,7 +26,7 @@ public class StreakResponseDTO {
     private Date modifiedDate;
     private String content;
 
-    private String categoryName;
+    private String headlineName;
     private String nickName;
 
 }

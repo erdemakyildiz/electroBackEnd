@@ -29,7 +29,7 @@ public class JwtFilter extends GenericFilterBean {
 
     public JwtFilter(String secretKey) {
         allowURL.add("/streak/streaks");
-        allowURL.add("/streak/categories");
+        allowURL.add("/streak/headlines");
         allowURL.add("/user/auth");
         allowURL.add("/user/create");
 
