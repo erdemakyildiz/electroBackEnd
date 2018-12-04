@@ -9,6 +9,7 @@ import com.electro.models.Headline;
 import com.electro.models.Streak;
 import com.electro.models.User;
 import com.electro.repository.StreakRepository;
+import com.electro.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,13 @@ public class StreakService {
 
     @Autowired
     private HeadlineService headlineService;
+
+    @Autowired
+    private UserService userService;
+
+    public Optional<Streak> findById(long id){
+        return streakRepository.findById(id);
+    }
 
     public void createStreak(StreakRequestDTO streakRequestDTO, User user) {
         final Streak streak = new Streak().fromDTO(streakRequestDTO);
@@ -53,19 +61,37 @@ public class StreakService {
         streakRepository.save(streak);
     }
 
-    public void like(long streakId, User user) throws StreakAuthorizeException, StreakNullException {
-        final Streak streak = checkAuthority(streakId, user);
+    public void like(long streakId, User user) throws StreakNullException {
+        final Streak streak = getStreak(streakId);
 
-        streak.setLikeCount(streak.getLikeCount() + 1);
+        if (!user.getLikedStreaks().contains(streak)) {
+            streak.setLikeCount(streak.getLikeCount() + 1);
 
+            user.getLikedStreaks().add(streak);
+        }else {
+            streak.setLikeCount((streak.getLikeCount() > 0 ? streak.getLikeCount() : 1) - 1);
+
+            user.getLikedStreaks().remove(streak);
+        }
+
+        userService.save(user);
         streakRepository.save(streak);
     }
 
-    public void dissLike(long streakId, User user) throws StreakAuthorizeException, StreakNullException {
-        final Streak streak = checkAuthority(streakId, user);
+    public void dissLike(long streakId, User user) throws StreakNullException {
+        final Streak streak = getStreak(streakId);
 
-        streak.setDissLikeCount(streak.getDissLikeCount() + 1);
+        if (!user.getDisslikedStreaks().contains(streak)) {
+            streak.setDissLikeCount(streak.getDissLikeCount() + 1);
 
+            user.getDisslikedStreaks().add(streak);
+        }else {
+            streak.setDissLikeCount((streak.getDissLikeCount() > 0 ? streak.getDissLikeCount() : 1) - 1);
+
+            user.getDisslikedStreaks().remove(streak);
+        }
+
+        userService.save(user);
         streakRepository.save(streak);
     }
 

@@ -9,6 +9,8 @@ import com.electro.service.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -17,9 +19,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+    private static Logger logger = LogManager.getLogger(UserController.class);
 
     @Value( "${secret.key}" )
     private String secretKey;

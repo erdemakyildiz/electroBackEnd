@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/streak")
 public class StreakController {
@@ -61,13 +62,13 @@ public class StreakController {
 
     @PostMapping("/like")
     @ResponseStatus(HttpStatus.OK)
-    public void likeStreak(@RequestParam("streakId") long streakId, User user) throws StreakAuthorizeException, StreakNullException {
+    public void likeStreak(@RequestParam("streakId") long streakId, User user) throws StreakNullException {
         streakService.like(streakId, user);
     }
 
     @PostMapping("/dissLike")
     @ResponseStatus(HttpStatus.OK)
-    public void dissLikeStreak(@RequestParam("streakId") long streakId, User user) throws StreakAuthorizeException, StreakNullException {
+    public void dissLikeStreak(@RequestParam("streakId") long streakId, User user) throws StreakNullException {
         streakService.dissLike(streakId, user);
     }
 

@@ -19,4 +19,7 @@ public class Headline {
 
     @OneToMany
     private List<Streak> streaks;
+
+    @OneToMany
+    private List<Comment> comments;
 }

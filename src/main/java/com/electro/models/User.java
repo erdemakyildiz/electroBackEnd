@@ -31,6 +31,21 @@ public class User {
     @OneToMany
     private List<Streak> streaks;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Comment> comments;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Streak> likedStreaks;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Streak> disslikedStreaks;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Comment> upComment;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Comment> downComment;
+
     public User fromDTO(UserRequestDTO dto){
         final User user = new User(dto.getId(), dto.getNickName(), dto.getPassword(), dto.getMail());
         return user;

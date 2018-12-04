@@ -7,6 +7,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -42,6 +43,9 @@ public class Streak {
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Headline headline;
+
+    @OneToMany
+    private List<Comment> comments;
 
     public Streak fromDTO(StreakRequestDTO dto) {
         final Streak streak = new Streak(dto.getId() ,dto.getTitle(), dto.getContent());

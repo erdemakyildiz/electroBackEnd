@@ -87,4 +87,7 @@ public class UserService {
         return DigestUtils.sha256Hex(pass);
     }
 
+    public void save(User user) {
+        userRepository.save(user);
+    }
 }
